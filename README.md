@@ -12,10 +12,4 @@ The encoder and decoder implemented in the recurrent neural network have the sam
 In order to further contain the information of the encoded input sequence, the context variable is concatenated with the input of the decoder at all time steps. The hidden states and input vectors obtained from the previous encoder are spliced and passed to the model at the same time. In order to predict the probability distribution of the output lexical elements, a linear transformation is added to the last layer of the RNN network to map the structure to the number of vocabulary size.
 From the code implementation, the Decoder's model structure is different from the Encoder in that the first parameter length of the GRU is the sum of the lengths of the embedding layer and the hidden layer from the Encoder, followed by the final fully connected layer, and finally, the initialisation state is used with the Encoder's output.
 
-For decoder-only models, I have not used them personally, but the most famous of these as far as I can tell is OpenAI's GPT series of models. Its unidirectionality means that when generating text, each new word is generated based on previous words. This is in contrast to the bidirectional or global contextual understanding of encoder-decoder models or encoder-only models such as BERT. So it is more suitable for text generation and story creation and has some limitations and challenges if used in machine translation.
-
-For HPC, during my postgraduate studies, the University of Warwick offered this course CS402, which covers Fundamental concepts in High Performance Computing, GPU programming, Parallel decomposition and High Performance Computing systems. Therefore I would say I am quite familiar with HPC. The impact of HPC on Transformers is significant, hypocrites require a lot of resources for training, HPC can significantly reduce the training time and enable researchers to iterate and optimise models quickly. 
-
-If you are convenient, we could discuss more over a coffee chat or a zoom meeting, which ever works for you. Hope to hear back from you soon, have a great week ahead.
-
 
