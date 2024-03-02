@@ -1,2 +1,21 @@
 A Sequence to Sequence (Seq2Seq) model based architecture is used, which consists of two parts, Encoder and Decoder, and is capable of efficiently handling variable length input and output sequences.
+Whole MT model is designed to implement Seq2seq, and the overall architecture of the model is through the encoder and decoder composed of two RNNs. The input to the encoder is a sequence of variable length which is transformed into a hidden state in the RNN network. To continuously generate tokens with sequence information, the input to the independent RNN decoder is to predict the next token based on the encoded information of the input message and the words that have been generated. In the preprocessing of the dataset, it is set that the beginning and end of the text are set with <bos>&<eos> as the initial and final hidden states and the final hidden state of the decoder is set as a part of the decoder every time step. part of the input sequence.
+The formula for the encoder is:  ht = f(xt, ht-1);  xt is the input feature vector; h(t-1): the hidden state of the previous step After f-transformation Generate the hidden state of the current time step ht.
+        c = q(h1, ...., hT); 
+All the hidden states are combined to obtain the variable c with context variables through a function q. 
+The hidden states depend on only two input subsequences, the position of the time step where the hidden state is located and the previous sequence. So the hidden state is encoding the whole sequence once, which is the process of constructing an encoder for a bidirectional RNN.
+For the decoder, a conditional probability output is performed on the output sequence from the dataset:
+  P = (yt'|y1,...,yt'-1, c)
+The final conditional probability is inferred from the context variable c and the previous output subsequence y1~yt'- 1. To model the probability P with st' = g(yt-1, c, st-1).
+The separate neural network utilised as a decoder uses any time step t' on the input sequence and y(t'-1) and context c from the previous time step as input to obtain st'.
+The encoder and decoder implemented in the recurrent neural network have the same number of layers and hidden units. When different hidden units are set it results in a messy matrix shape that cannot be computed.
+In order to further contain the information of the encoded input sequence, the context variable is concatenated with the input of the decoder at all time steps. The hidden states and input vectors obtained from the previous encoder are spliced and passed to the model at the same time. In order to predict the probability distribution of the output lexical elements, a linear transformation is added to the last layer of the RNN network to map the structure to the number of vocabulary size.
+From the code implementation, the Decoder's model structure is different from the Encoder in that the first parameter length of the GRU is the sum of the lengths of the embedding layer and the hidden layer from the Encoder, followed by the final fully connected layer, and finally, the initialisation state is used with the Encoder's output.
+
+For decoder-only models, I have not used them personally, but the most famous of these as far as I can tell is OpenAI's GPT series of models. Its unidirectionality means that when generating text, each new word is generated based on previous words. This is in contrast to the bidirectional or global contextual understanding of encoder-decoder models or encoder-only models such as BERT. So it is more suitable for text generation and story creation and has some limitations and challenges if used in machine translation.
+
+For HPC, during my postgraduate studies, the University of Warwick offered this course CS402, which covers Fundamental concepts in High Performance Computing, GPU programming, Parallel decomposition and High Performance Computing systems. Therefore I would say I am quite familiar with HPC. The impact of HPC on Transformers is significant, hypocrites require a lot of resources for training, HPC can significantly reduce the training time and enable researchers to iterate and optimise models quickly. 
+
+If you are convenient, we could discuss more over a coffee chat or a zoom meeting, which ever works for you. Hope to hear back from you soon, have a great week ahead.
+
 
